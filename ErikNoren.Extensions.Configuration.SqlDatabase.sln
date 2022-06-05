@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikNoren.Extensions.Configuration.SqlServer", "src\ErikNoren.Extensions.Configuration.SqlServer.csproj", "{334E236E-C332-480F-8AF0-A7F921D623C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikNoren.Extensions.Configuration.SqlServer.Tests", "tests\ErikNoren.Extensions.Configuration.SqlServer.Tests.csproj", "{96381E27-EF63-4151-9782-FBE943D2F435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{334E236E-C332-480F-8AF0-A7F921D623C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334E236E-C332-480F-8AF0-A7F921D623C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334E236E-C332-480F-8AF0-A7F921D623C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334E236E-C332-480F-8AF0-A7F921D623C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96381E27-EF63-4151-9782-FBE943D2F435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96381E27-EF63-4151-9782-FBE943D2F435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96381E27-EF63-4151-9782-FBE943D2F435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96381E27-EF63-4151-9782-FBE943D2F435}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DB2391F-22C8-4CD3-A372-341452ED2380}
+	EndGlobalSection
+EndGlobal
