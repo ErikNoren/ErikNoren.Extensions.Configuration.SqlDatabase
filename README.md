@@ -96,7 +96,7 @@ The keys can get even more complicated when you have arrays of values.
         }, {
             "To": ["person5@example.com"],
             "From": "person2@example.com"
-        }
+        }]
     }
 }
 ```
