@@ -13,6 +13,9 @@ This package provides the ability to connect to any data provider supported by M
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <FileVersion></FileVersion>
     <AssemblyVersion></AssemblyVersion>
+    <RepositoryUrl>https://github.com/ErikNoren/ErikNoren.Extensions.Configuration.SqlDatabase</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Authors>vikingerik, ErikNoren</Authors>
   </PropertyGroup>
 
   <ItemGroup>
