@@ -110,7 +110,7 @@ The keys can get even more complicated when you have arrays of values.
 "AppSettings:EmailInfo:1:From", "person2@example.com"
 ```
 
-I am was very surprised and happy to see how easy it was to create a new provider and integrate it into my projects.
+I was very surprised and happy to see how easy it was to create a new provider and integrate it into my projects.
 Read more about [Configuration](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration) and [Options](https://docs.microsoft.com/en-us/dotnet/core/extensions/options) on the Microsoft Docs site.
 
 
