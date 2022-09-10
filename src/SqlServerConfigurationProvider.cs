@@ -33,16 +33,16 @@ public class SqlServerConfigurationProvider<TDb> : ConfigurationProvider, IDispo
 
         try
         {
-          
 
-            var queryCommand = Source.CreateQueryDelegate(Source.DbConnection);
+            var db = Source.DbConnection.Invoke();
+            var queryCommand = Source.CreateQueryDelegate(db);
 
             if (queryCommand == null)
                 return;
 
             using (queryCommand)
             {
-                Source.DbConnection.Open();
+                db.Open();
 
                 using var reader = queryCommand.ExecuteReader();
 

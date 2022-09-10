@@ -1,4 +1,6 @@
+using System.Data.Common;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 
 namespace ErikNoren.Extensions.Configuration.SqlServer.Tests;
@@ -11,11 +13,10 @@ public class SqlServerReadTests
     [Fact]
     public void DatabaseSettingsAreLoadable_SqlServer()
     {
-        var sql = new SqlConnection(SqlServerConnectionString);
         using var cfgProvider =
             new SqlServerConfigurationProvider<SqlConnection>(new SqlServerConfigurationSource<SqlConnection>()
             {
-                DbConnection = sql,
+                DbConnection = () => new SqlConnection(SqlServerConnectionString),
                 CreateQueryDelegate = db =>
                     new SqlCommand("SELECT SettingKey, SettingValue FROM dbo.Settings WHERE IsActive = 1", db)
             });
@@ -32,11 +33,10 @@ public class SqlServerReadTests
     [Fact]
     public void DatabaseSettingsAreLoadable_MySql()
     {
-        var sql = new MySqlConnection(MySqlServerConnectionString);
         using var cfgProvider =
             new SqlServerConfigurationProvider<MySqlConnection>(new SqlServerConfigurationSource<MySqlConnection>()
             {
-                DbConnection = sql,
+                DbConnection = () => new MySqlConnection(MySqlServerConnectionString),
                 CreateQueryDelegate = db =>
                     new MySqlCommand("SELECT SettingKey, SettingValue FROM Settings WHERE IsActive = 1", db)
             });

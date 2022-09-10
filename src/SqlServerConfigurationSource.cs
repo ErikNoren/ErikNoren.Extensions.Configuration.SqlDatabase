@@ -7,7 +7,7 @@ namespace ErikNoren.Extensions.Configuration.SqlServer;
 public class SqlServerConfigurationSource<TDb> : IConfigurationSource where TDb: DbConnection
 {
 
-    public TDb DbConnection { get; set; }
+    public Func<TDb> DbConnection { get; set; }
 
     public TimeSpan? RefreshInterval { get; set; }
 
