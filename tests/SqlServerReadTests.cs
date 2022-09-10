@@ -18,8 +18,7 @@ public class SqlServerReadTests
         using var cfgProvider = BuildConfig<SqlConnection, SqlCommand>(
             () => new SqlConnection(SqlServerConnectionString), db =>
                 new SqlCommand(SqlQuery, db));
-
-        cfgProvider.Load();
+        
         AssertConfig(cfgProvider);
     }
 
