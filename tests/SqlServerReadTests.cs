@@ -48,4 +48,43 @@ public class SqlServerReadTests
 
         Assert.False(cfgProvider.TryGet("AppSettings:InactiveSetting", out _));
     }
+
+    [Fact]
+    public void DatabaseSettingsAreLoadable_Sqlite()
+    {
+        const string sqliteConnectionString = "Data Source=:memory:;";
+        var db = new SqliteConnection(sqliteConnectionString);
+
+        using (var queryCommand = new SqliteCommand(@"create table Settings
+(
+    Id           int primary key  NOT NULL,
+    SettingKey   varchar(50),
+    SettingValue varchar(50),
+    IsActive     varchar(1)
+);
+insert into Settings (Id,SettingKey, SettingValue, IsActive)
+values
+    (1,'AppSettings:DbIntSetting','769283',1);", db))
+        {
+            db.Open();
+
+            queryCommand.ExecuteNonQuery();
+
+        }
+
+        using var cfgProvider =
+            new SqlServerConfigurationProvider<SqliteConnection>(new SqlServerConfigurationSource<SqliteConnection>()
+            {
+                DbConnection = () => db,
+                CreateQueryDelegate = db =>
+                    new SqliteCommand("SELECT SettingKey, SettingValue FROM Settings WHERE IsActive = 1", db)
+            });
+
+        cfgProvider.Load();
+
+        Assert.True(cfgProvider.TryGet("AppSettings:DbIntSetting", out var value));
+        Assert.Equal("769283", value);
+
+        Assert.False(cfgProvider.TryGet("AppSettings:InactiveSetting", out _));
+    }
 }
