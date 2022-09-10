@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Data.Common;
+using Microsoft.Extensions.Configuration;
 
 namespace ErikNoren.Extensions.Configuration.SqlServer;
 
 public static class SqlServerConfigurationExtensions
 {
-    public static IConfigurationBuilder AddSqlServer(this IConfigurationBuilder builder, Action<SqlServerConfigurationSource>? configurationSource)
-        => builder.Add(configurationSource);
+    public static IConfigurationBuilder AddSqlServerType<T>(this IConfigurationBuilder builder, Action<SqlServerConfigurationSource<T>>? configurationSource) where T : DbConnection =>
+        builder.Add(configurationSource);
 }

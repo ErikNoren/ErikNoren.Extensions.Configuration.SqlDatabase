@@ -1,20 +1,17 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Data.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace ErikNoren.Extensions.Configuration.SqlServer;
 
-public class SqlServerConfigurationProvider : ConfigurationProvider, IDisposable
+public class SqlServerConfigurationProvider<TDb> : ConfigurationProvider, IDisposable where TDb : DbConnection
 {
-    public SqlServerConfigurationSource Source { get; }
+    public SqlServerConfigurationSource<TDb> Source { get; }
 
     private readonly Timer? _refreshTimer = null;
-
-    public SqlServerConfigurationProvider(SqlServerConfigurationSource source)
+    
+    public SqlServerConfigurationProvider(SqlServerConfigurationSource<TDb> source)
     {
-        if (source is null)
-            throw new ArgumentNullException(nameof(source));
-
-        Source = source;
+        Source = source ?? throw new ArgumentNullException(nameof(source));
 
         if (Source.RefreshInterval.HasValue)
             _refreshTimer = new Timer(_ => ReadDatabaseSettings(true), null, Timeout.Infinite, Timeout.Infinite);
@@ -22,8 +19,6 @@ public class SqlServerConfigurationProvider : ConfigurationProvider, IDisposable
 
     public override void Load()
     {
-        if (string.IsNullOrWhiteSpace(Source.ConnectionString))
-            return;
 
         ReadDatabaseSettings(false);
 
@@ -33,21 +28,21 @@ public class SqlServerConfigurationProvider : ConfigurationProvider, IDisposable
 
     private void ReadDatabaseSettings(bool isReload)
     {
-        if (string.IsNullOrWhiteSpace(Source.ConnectionString) || Source.CreateQueryDelegate == null)
+        if ( Source.CreateQueryDelegate == null)
             return;
 
         try
         {
-            using var sqlConnection = new SqlConnection(Source.ConnectionString);
+          
 
-            var queryCommand = Source.CreateQueryDelegate(sqlConnection);
+            var queryCommand = Source.CreateQueryDelegate(Source.DbConnection);
 
             if (queryCommand == null)
                 return;
 
             using (queryCommand)
             {
-                sqlConnection.Open();
+                Source.DbConnection.Open();
 
                 using var reader = queryCommand.ExecuteReader();
 
@@ -68,7 +63,7 @@ public class SqlServerConfigurationProvider : ConfigurationProvider, IDisposable
                         System.Diagnostics.Debug.WriteLine(readerEx);
                     }
                 }
-                
+
                 reader.Close();
 
                 if (!isReload || !SettingsMatch(Data, settings))
