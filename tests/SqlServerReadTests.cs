@@ -36,6 +36,7 @@ public class SqlServerReadTests
     [Fact]
     public void DatabaseSettingsAreLoadable_Sqlite()
     {
+#if NET
         const string sqliteConnectionString = "Data Source=:memory:;";
         var db = MakeSqlLiteDb(sqliteConnectionString);
         using var cfgProvider = BuildConfig<SqliteConnection, SqliteCommand>(
@@ -43,6 +44,7 @@ public class SqlServerReadTests
                 new SqliteCommand(SqlQuery, db));
         
         AssertConfig(cfgProvider);
+#endif
     }
 
     private static SqliteConnection MakeSqlLiteDb(string sqliteConnectionString)
